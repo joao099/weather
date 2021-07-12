@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { useRem } from 'responsive-native'
 import { ThemeContext } from 'styled-components'
 
-import { Container, LocationText } from './styles'
+import { Container, LocationText, ContainerContent } from './styles'
 
 type HeaderProps = {
   titleHeader: string
@@ -16,12 +16,14 @@ const Header = ({ titleHeader }: HeaderProps) => {
 
   return (
     <Container>
-      <Icon
-        name="location-sharp"
-        size={rem(1.5)}
-        color={colors.darkBlue}
-      />
-      <LocationText>{titleHeader}</LocationText>
+      <ContainerContent>
+        <Icon
+          name="location-sharp"
+          size={rem(1.5)}
+          color={colors.darkBlue}
+        />
+        <LocationText>{titleHeader}</LocationText>
+      </ContainerContent>
     </Container>
   )
 }

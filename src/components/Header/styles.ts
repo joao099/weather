@@ -4,7 +4,13 @@ export const Container = styled.View`
   height: 15%;
   align-items: flex-end;
   flex-direction: row;
-  padding: 0 ${({ theme }) => theme.screen.rem(1)}px;
+  padding: 0 ${({ theme }) => theme.screen.rem(0.5)}px;
+`
+
+export const ContainerContent = styled.View`
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 `
 
 export const LocationText = styled.Text`
