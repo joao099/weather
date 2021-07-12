@@ -2,9 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { Platform, PermissionsAndroid } from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
 
+import InfoWeather from '../../components/InfoWeather'
+import ListWeather from '../../components/ListWeather'
 import Header from '../../components/Header'
 import endPoints from '../../services/endPoints'
-import InfoWeather from '../../components/InfoWeather'
 import { Container } from './styles'
 import { useFetch } from '../../hooks/useFetch'
 import { GeolocationInterface } from '../../interfaces/GeolocationInterface'
@@ -19,10 +20,10 @@ const Home: React.FC = () => {
   let watchID: number
 
   // Requisições a api de geolocalização do google e a openweather
-  const { url: baseUrlGeocode, apiKey: apiKeyGeocode } = endPoints.geocode
-  const { url: baseUrlWeather, apiKey: apiKeyWeather } = endPoints.openWeather
-  const urlGeolocation = `${baseUrlGeocode}?address=${currentLatitude},${currentLongitude}&key=${apiKeyGeocode}`
-  const urlWeather = `${baseUrlWeather}?lat=${currentLatitude}&lon=${currentLongitude}&exclude=minutely,hourly,alerts&lang=pt_br&units=metric&appid=${apiKeyWeather}`
+  const { url: baseUrlGeocode } = endPoints.geocode
+  const { url: baseUrlWeather } = endPoints.openWeather
+  const urlGeolocation = baseUrlGeocode(currentLatitude, currentLongitude)
+  const urlWeather = baseUrlWeather(currentLatitude, currentLongitude)
   const { data: adressData, error: adressError } = useFetch<GeolocationInterface>(shouldFetch ? urlGeolocation : null)
   const { data: weatherData, error: weatherError } = useFetch<WeatherInterface>(shouldFetch ? urlWeather : null)
 
@@ -146,26 +147,7 @@ const Home: React.FC = () => {
       <InfoWeather
         currentWeatherData={currentWeatherData}
       />
-
-      {/* <ContentContainer>
-        <HorizontalContainer>
-          <MoistureContainer>
-            <MoistureImage />
-            <MoistureDescription></MoistureDescription>
-          </MoistureContainer>
-
-          <WeatherDescription></WeatherDescription>
-
-          <WindContainer>
-            <WindImage />
-            <WindDescription></WindDescription>
-          </WindContainer>
-        </HorizontalContainer>
-
-        <ListHorizontal>
-          <CardsWeather />
-        </ListHorizontal>
-      </ContentContainer> */}
+      <ListWeather data={weatherData?.daily} />
     </Container>
   )
 }
