@@ -8,15 +8,22 @@ import {
   DegreesCelsius,
   RowContainer,
   WaterIcon,
-  WindIcon
+  WindIcon,
+  LittleText
 } from './styles'
 import { CurrentInterface } from '../../interfaces/WeatherInterface'
+import endPoints from '../../services/endPoints'
+import useStore from '../../store'
 
 type Props = {
   currentWeatherData: CurrentInterface
 }
 
 const InfoWeather = ({ currentWeatherData }: Props) => {
+  // Store
+  const dailyData = useStore(state => state.dailyData)
+
+  // Variáveis relacionado ao clima ATUAL para melhor nomeclatura
   const currentTemperature = currentWeatherData?.temp
   const currentHumidity = currentWeatherData?.humidity
   const currentWeatherImage = currentWeatherData?.weather[0].icon
@@ -33,15 +40,26 @@ const InfoWeather = ({ currentWeatherData }: Props) => {
   const firstLetterToUppercase = (value: string): string => value?.charAt(0).toUpperCase() + value?.slice(1)
   currentWeatherDescription = firstLetterToUppercase(currentWeatherDescription)
 
-  // Url da imagem relacionada ao clima atual
-  const weatherImageUrl = `http://openweathermap.org/img/wn/${currentWeatherImage}@2x.png`
+  // Verificações
+  const dailyWeatherExists = dailyData?.weather // verifica se o clima do clima selecionado pelo usuário existe
+  const dailyTemperature = dailyData?.temp // pega a temperatura do dia selecionado pelo usuário
+  const dailyWindSpeed = dailyData?.wind_speed // pega a velocidade do vento do dia selecionado pelo usuário
+  const dailyHumidity = dailyData?.humidity // pega a umidade do dia selecionado pelo usuário
+  let dailyWeatherDescription = dailyWeatherExists ? dailyData?.weather[0].description : '' // se o clima foi selecionado pelo usuário use a descrição do dia selecionado
+
+  dailyWeatherDescription = firstLetterToUppercase(dailyWeatherDescription)
+
+  // Url da imagem relacionada ao clima atual ou se o usuário clicar pra detalhar um dia específico, incluirá o ícone do dia em específico
+  const dailyIcon = dailyWeatherExists ? dailyData.weather[0].icon : ''
+  const weatherImageUrl = endPoints.openWeather.urlImage(dailyWeatherExists ? dailyIcon : currentWeatherImage)
 
   return (
     <Container>
       <WeatherImage source={{ uri: weatherImageUrl || '' }} />
-      <Description>{currentWeatherDescription || ''}</Description>
-      <DegreesCelsius>{currentTemperature || ''}°</DegreesCelsius>
-
+      <Description>{dailyWeatherDescription || currentWeatherDescription || ''}</Description>
+      {dailyTemperature?.min && <LittleText style={{ color: '#fff' }}>min<DegreesCelsius>{dailyTemperature?.min}°</DegreesCelsius></LittleText>}
+      {dailyTemperature?.min && <LittleText style={{ color: '#fff' }}>max<DegreesCelsius>{dailyTemperature?.max}°</DegreesCelsius></LittleText>}
+      {!dailyTemperature?.min && <LittleText>atual<DegreesCelsius fontSize={4} >{currentTemperature || ''}°</DegreesCelsius></LittleText>}
       <RowContainer>
         <RowContainer
           marginRight={rem(1)}
@@ -50,7 +68,7 @@ const InfoWeather = ({ currentWeatherData }: Props) => {
             name="wind"
             size={rem(1.2)}
           />
-          <Description>{currentWindSpeed || ''} km/h</Description>
+          <Description>{dailyWindSpeed || currentWindSpeed || ''} km/h</Description>
         </RowContainer>
 
         <RowContainer>
@@ -58,7 +76,7 @@ const InfoWeather = ({ currentWeatherData }: Props) => {
             name="water-outline"
             size={rem(1.2)}
           />
-          <Description>{currentHumidity || ''} %</Description>
+          <Description>{dailyHumidity || currentHumidity || ''} %</Description>
         </RowContainer>
       </RowContainer>
     </Container>

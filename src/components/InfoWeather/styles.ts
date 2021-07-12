@@ -19,9 +19,13 @@ export const Description = styled.Text`
 `
 
 export const DegreesCelsius = styled.Text`
-  font-size: ${({ theme }) => theme.screen.rem(4)}px;
+  font-size: ${({ theme, fontSize }) => fontSize ? theme.screen.rem(fontSize) : theme.screen.rem(2.5)}px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: bold;
+`
+
+export const LittleText = styled.Text`
+  color: ${({ theme }) => theme.colors.white};
 `
 
 export const WeatherImage = styled.Image`
