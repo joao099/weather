@@ -4,10 +4,10 @@ export const Container = styled.TouchableOpacity`
   width: ${({ theme }) => theme.screen.rem(6)}px;
   background-color: rgba(54, 54, 54, .5);
   padding: 5px 5px 10px 5px;
-  margin: 5px;
-  margin-top: ${({ theme }) => theme.screen.rem(5)}px;
+  margin: ${({ theme }) => theme.screen.rem(3)}px 5px;
   border-radius: 5px;
   align-items: center;
+  flex: 1;
 `
 export const Day = styled.Text`
   color: ${({ theme }) => theme.colors.gray};
