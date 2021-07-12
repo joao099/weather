@@ -20,7 +20,7 @@ const Header = ({ titleHeader }: HeaderProps) => {
         <Icon
           name="location-sharp"
           size={rem(1.5)}
-          color={colors.darkBlue}
+          color={colors.white}
         />
         <LocationText>{titleHeader}</LocationText>
       </ContainerContent>
