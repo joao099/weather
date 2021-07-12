@@ -57,8 +57,8 @@ export function ThemeProvider ({ children }: Props) {
         }
       },
       colors: {
-        darkBlue: '#2d2f63',
-        white: '#fff'
+        white: '#fff',
+        black: '#000'
       }
     }
   }, [breakpoint, padding, baseFontSize, fontScaleFactor])
