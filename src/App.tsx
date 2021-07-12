@@ -9,9 +9,7 @@ import { ThemeProvider } from './styles'
 const App: React.FC = () => (
   <>
     <StatusBar
-      backgroundColor="#fff"
-      animated
-      barStyle="dark-content"
+      hidden
     />
     <SafeAreaView style={{ flex: 1 }}>
       <ThemeProvider>
