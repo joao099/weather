@@ -1,25 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Platform, PermissionsAndroid } from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
 
 import Header from '../../components/Header'
 import endPoints from '../../services/endPoints'
+import InfoWeather from '../../components/InfoWeather'
 import { Container } from './styles'
 import { useFetch } from '../../hooks/useFetch'
 import { GeolocationInterface } from '../../interfaces/GeolocationInterface'
-// import InfoWeather from '../../components/InfoWeather'
+import { WeatherInterface } from '../../interfaces/WeatherInterface'
 
 const Home: React.FC = () => {
   const [currentLongitude, setCurrentLongitude] = useState('')
   const [currentLatitude, setCurrentLatitude] = useState('')
   const [shouldFetch, setShouldFetch] = useState(false)
 
-  const { url, apiKey } = endPoints.geocode
-  const { data: adressData } = useFetch<GeolocationInterface>(shouldFetch ? `${url}?address=${currentLatitude},${currentLongitude}&key=${apiKey}` : null)
-
   let titleHeader: string = ''
   let watchID: number
 
+  // Requisições a api de geolocalização do google e a openweather
+  const { url: baseUrlGeocode, apiKey: apiKeyGeocode } = endPoints.geocode
+  const { url: baseUrlWeather, apiKey: apiKeyWeather } = endPoints.openWeather
+  const urlGeolocation = `${baseUrlGeocode}?address=${currentLatitude},${currentLongitude}&key=${apiKeyGeocode}`
+  const urlWeather = `${baseUrlWeather}?lat=${currentLatitude}&lon=${currentLongitude}&exclude=minutely,hourly,alerts&lang=pt_br&units=metric&appid=${apiKeyWeather}`
+  const { data: adressData, error: adressError } = useFetch<GeolocationInterface>(shouldFetch ? urlGeolocation : null)
+  const { data: weatherData, error: weatherError } = useFetch<WeatherInterface>(shouldFetch ? urlWeather : null)
+
+  // Faz a solicitação de permissão de localização ao usuário na primeira renderização
   useEffect(() => {
     requestLocationPermission()
     return () => {
@@ -37,6 +44,14 @@ const Home: React.FC = () => {
     const locationName = `${adressData.results[1].address_components[1].short_name} - ${adressData.results[1].address_components[2].short_name}`
     titleHeader = locationName
   }
+
+  // eslint-disable-next-line no-unused-vars
+  const currentWeatherData = useMemo(() => {
+    // Se os dados dos climas existir, a variável currentWeatherData receberá os dados do clima atual
+    if (weatherData) {
+      return weatherData.current
+    }
+  }, [weatherData])
 
   // Permissão de localização do usuário
   const requestLocationPermission = async () => {
@@ -67,6 +82,7 @@ const Home: React.FC = () => {
     }
   }
 
+  // Pega a latitude e longitude do usuário
   const getOneTimeLocation = () => {
     Geolocation.getCurrentPosition(
       // Dará a você a localização atual
@@ -96,6 +112,7 @@ const Home: React.FC = () => {
     )
   }
 
+  // Adiciona um ouvinte a localização do usuário, caso mude, será atualizado a nova longitute e latitude
   const subscribeLocation = () => {
     watchID = Geolocation.watchPosition(
       (position) => {
@@ -126,7 +143,9 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Header titleHeader={titleHeader} />
-      {/* <InfoWeather /> */}
+      <InfoWeather
+        currentWeatherData={currentWeatherData}
+      />
 
       {/* <ContentContainer>
         <HorizontalContainer>
