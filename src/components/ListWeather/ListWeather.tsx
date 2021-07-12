@@ -20,9 +20,6 @@ const ListWeather = ({ data }: ListWeatherProps) => {
       animation="bounceInUp"
       useNativeDriver
       duration={2000}
-      style={{
-        padding: 10
-      }}
     >
       <FlatList
         horizontal
