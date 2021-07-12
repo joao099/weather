@@ -15,7 +15,11 @@ const Header = ({ titleHeader }: HeaderProps) => {
   const rem = useRem()
 
   return (
-    <Container>
+    <Container
+      animation="bounceInDown"
+      duration={2000}
+      useNativeDriver
+    >
       <ContainerContent>
         <Icon
           name="location-sharp"

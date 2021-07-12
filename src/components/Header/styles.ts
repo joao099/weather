@@ -1,6 +1,7 @@
 import styled from 'styled-components/native'
+import * as Animatable from 'react-native-animatable'
 
-export const Container = styled.View`
+export const Container = styled(Animatable.View)`
   height: 10%;
   align-items: flex-end;
   flex-direction: row;
