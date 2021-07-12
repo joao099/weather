@@ -8,6 +8,7 @@ import Header from '../../components/Header'
 import endPoints from '../../services/endPoints'
 import { Container } from './styles'
 import { useFetch } from '../../hooks/useFetch'
+import { useSnackBar } from '../../hooks/useSnackBar'
 import { GeolocationInterface } from '../../interfaces/GeolocationInterface'
 import { WeatherInterface } from '../../interfaces/WeatherInterface'
 
@@ -54,6 +55,22 @@ const Home: React.FC = () => {
     }
   }, [weatherData])
 
+  // Se houver erro na requisição de endereço
+  if (adressError) {
+    useSnackBar({
+      title: 'Erro na requisição',
+      backgroundColor: 'red'
+    })
+  }
+
+  // Se houver erro na requisição de climas
+  if (weatherError) {
+    useSnackBar({
+      title: 'Erro na requisição',
+      backgroundColor: 'red'
+    })
+  }
+
   // Permissão de localização do usuário
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
@@ -75,10 +92,16 @@ const Home: React.FC = () => {
           getOneTimeLocation()
           subscribeLocation()
         } else {
-          console.log('falhou')
+          useSnackBar({
+            title: 'Erro na permissão',
+            backgroundColor: 'red'
+          })
         }
       } catch (err) {
-        console.warn(err)
+        useSnackBar({
+          title: 'Erro na permissão',
+          backgroundColor: 'red'
+        })
       }
     }
   }
@@ -103,7 +126,10 @@ const Home: React.FC = () => {
         setCurrentLatitude(currentLatitude)
       },
       (error) => {
-        console.log('entrou erro', error)
+        useSnackBar({
+          title: 'Erro na permissão' + error,
+          backgroundColor: 'red'
+        })
       },
       {
         enableHighAccuracy: true,
@@ -132,7 +158,10 @@ const Home: React.FC = () => {
         setCurrentLatitude(currentLatitude)
       },
       (error) => {
-        console.log('error', error)
+        useSnackBar({
+          title: 'Erro na permissão' + error,
+          backgroundColor: 'red'
+        })
       },
       {
         enableHighAccuracy: true,
