@@ -1,5 +1,6 @@
 import React from 'react'
 import { FlatList } from 'react-native'
+import * as Animatable from 'react-native-animatable'
 
 import CardWeather from '../CardWeather'
 import { DailyInterface } from '../../interfaces/WeatherInterface'
@@ -15,12 +16,21 @@ const ListWeather = ({ data }: ListWeatherProps) => {
   const renderItem = ({ item }) => <CardWeather item={item} />
 
   return (
-    <FlatList
-      horizontal
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={(item) => item?.dt.toString()}
-    />
+    <Animatable.View
+      animation="bounceInUp"
+      useNativeDriver
+      duration={2000}
+      style={{
+        padding: 10
+      }}
+    >
+      <FlatList
+        horizontal
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item?.dt.toString()}
+      />
+    </Animatable.View>
   )
 }
 
