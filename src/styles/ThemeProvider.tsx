@@ -58,7 +58,8 @@ export function ThemeProvider ({ children }: Props) {
       },
       colors: {
         white: '#fff',
-        black: '#000'
+        black: '#000',
+        gray: '#A9A9A9'
       }
     }
   }, [breakpoint, padding, baseFontSize, fontScaleFactor])
