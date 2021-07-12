@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Platform, PermissionsAndroid } from 'react-native'
+import { Platform, PermissionsAndroid, ActivityIndicator } from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
 
 import InfoWeather from '../../components/InfoWeather'
@@ -19,6 +19,7 @@ const Home: React.FC = () => {
 
   let titleHeader: string = ''
   let watchID: number
+  let isLoading: boolean = true
 
   // Requisições a api de geolocalização do google e a openweather
   const { url: baseUrlGeocode } = endPoints.geocode
@@ -45,6 +46,11 @@ const Home: React.FC = () => {
   if (adressData) {
     const locationName = `${adressData.results[1].address_components[1].short_name} - ${adressData.results[1].address_components[2].short_name}`
     titleHeader = locationName
+  }
+
+  // Se as duas requisições forem verdadeiras o loading recebe falso
+  if (adressData && weatherData) {
+    isLoading = false
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -172,11 +178,19 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <Header titleHeader={titleHeader} />
-      <InfoWeather
-        currentWeatherData={currentWeatherData}
-      />
-      <ListWeather data={weatherData?.daily} />
+
+      {isLoading
+        ? <ActivityIndicator size="large" color="#ec6e4c" />
+        : (
+        <>
+          <Header titleHeader={titleHeader} />
+          <InfoWeather
+          currentWeatherData={currentWeatherData}
+          />
+          <ListWeather data={weatherData?.daily} />
+        </>
+          )
+      }
     </Container>
   )
 }
