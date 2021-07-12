@@ -2,8 +2,9 @@
 import styled from 'styled-components/native'
 import { default as IonIcons } from 'react-native-vector-icons/Ionicons'
 import { default as FeatherIcons } from 'react-native-vector-icons/Feather'
+import * as Animatable from 'react-native-animatable'
 
-export const Container = styled.View`
+export const Container = styled(Animatable.View)`
   align-items: center;
 `
 
