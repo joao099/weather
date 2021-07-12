@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import * as Animatable from 'react-native-animatable'
 import { useRem } from 'responsive-native'
 
 import {
@@ -55,30 +56,36 @@ const InfoWeather = ({ currentWeatherData }: Props) => {
 
   return (
     <Container>
-      <WeatherImage source={{ uri: weatherImageUrl || '' }} />
-      <Description>{dailyWeatherDescription || currentWeatherDescription || ''}</Description>
-      {dailyTemperature?.min && <LittleText style={{ color: '#fff' }}>min<DegreesCelsius>{dailyTemperature?.min}°</DegreesCelsius></LittleText>}
-      {dailyTemperature?.min && <LittleText style={{ color: '#fff' }}>max<DegreesCelsius>{dailyTemperature?.max}°</DegreesCelsius></LittleText>}
-      {!dailyTemperature?.min && <LittleText>atual<DegreesCelsius fontSize={4} >{currentTemperature || ''}°</DegreesCelsius></LittleText>}
-      <RowContainer>
-        <RowContainer
-          marginRight={rem(1)}
-        >
-          <WindIcon
-            name="wind"
-            size={rem(1.2)}
-          />
-          <Description>{dailyWindSpeed || currentWindSpeed || ''} km/h</Description>
-        </RowContainer>
-
+      <Animatable.View
+        animation="bounceInRight"
+        duration={2000}
+        useNativeDriver
+      >
+        <WeatherImage source={{ uri: weatherImageUrl || '' }} />
+        <Description>{dailyWeatherDescription || currentWeatherDescription || ''}</Description>
+        {dailyTemperature?.min && <LittleText style={{ color: '#fff' }}>min<DegreesCelsius>{dailyTemperature?.min}°</DegreesCelsius></LittleText>}
+        {dailyTemperature?.min && <LittleText style={{ color: '#fff' }}>max<DegreesCelsius>{dailyTemperature?.max}°</DegreesCelsius></LittleText>}
+        {!dailyTemperature?.min && <LittleText>atual<DegreesCelsius fontSize={4} >{currentTemperature || ''}°</DegreesCelsius></LittleText>}
         <RowContainer>
-          <WaterIcon
-            name="water-outline"
-            size={rem(1.2)}
-          />
-          <Description>{dailyHumidity || currentHumidity || ''} %</Description>
+          <RowContainer
+            marginRight={rem(1)}
+          >
+            <WindIcon
+              name="wind"
+              size={rem(1.2)}
+            />
+            <Description>{dailyWindSpeed || currentWindSpeed || ''} km/h</Description>
+          </RowContainer>
+
+          <RowContainer>
+            <WaterIcon
+              name="water-outline"
+              size={rem(1.2)}
+            />
+            <Description>{dailyHumidity || currentHumidity || ''} %</Description>
+          </RowContainer>
         </RowContainer>
-      </RowContainer>
+      </Animatable.View>
     </Container>
   )
 }
