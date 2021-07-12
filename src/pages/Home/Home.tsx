@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   const [shouldFetch, setShouldFetch] = useState(false)
 
   const { url, apiKey } = endPoints.geocode
-  const { data } = useFetch<GeolocationInterface>(shouldFetch ? `${url}?address=${currentLatitude},${currentLongitude}&key=${apiKey}` : null)
+  const { data: adressData } = useFetch<GeolocationInterface>(shouldFetch ? `${url}?address=${currentLatitude},${currentLongitude}&key=${apiKey}` : null)
 
   let titleHeader: string = ''
   let watchID: number
@@ -32,9 +32,10 @@ const Home: React.FC = () => {
     if (currentLongitude && currentLatitude) setShouldFetch(true)
   }, [currentLongitude, currentLatitude])
 
-  if (data) {
-    const locationName = data.results[0].address_components.filter(item => item.types[0] === 'administrative_area_level_4')
-    titleHeader = locationName[0].long_name
+  // Setá o título do Header
+  if (adressData) {
+    const locationName = `${adressData.results[1].address_components[1].short_name} - ${adressData.results[1].address_components[2].short_name}`
+    titleHeader = locationName
   }
 
   // Permissão de localização do usuário
