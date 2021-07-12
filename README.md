@@ -2,7 +2,7 @@
 
 🎨  A Weather forecast app.
 
-![](gif/preview-gif.gif)
+![](gif/weathergif.gif)
 
 ## 🕹 Test here
 
