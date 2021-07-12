@@ -16,6 +16,8 @@ target 'weather' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNSnackbar', :path => '../node_modules/react-native-snackbar'
+
   target 'weatherTests' do
     inherit! :complete
     # Pods for testing
