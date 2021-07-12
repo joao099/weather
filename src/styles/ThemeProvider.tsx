@@ -56,7 +56,8 @@ export function ThemeProvider ({ children }: Props) {
           return validateMediaQuery({ minBreakpoint, maxBreakpoint, platform, currentBreakpoint: breakpoint.size })
         }
       },
-      palettes: {
+      colors: {
+        darkBlue: '#2d2f63',
         white: '#fff'
       }
     }
