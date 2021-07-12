@@ -1,18 +1,14 @@
 import styled from 'styled-components/native'
-import Icon from 'react-native-vector-icons/Fontisto'
-import { Searchbar } from 'react-native-paper'
 
 export const Container = styled.View`
-  width: 100%;
-  display: flex;
+  height: 15%;
+  align-items: flex-end;
   flex-direction: row;
-  padding: ${({ theme }) => theme.screen.rem(1.5)}px;
+  padding: 0 ${({ theme }) => theme.screen.rem(1)}px;
 `
 
-export const SearchIcon = styled(Icon)`
-  color: #696969;
-`
-
-export const Search = styled(Searchbar)`
-  width: 100%;
+export const LocationText = styled.Text`
+  font-size: ${({ theme }) => theme.screen.rem(1.2)}px;
+  margin-left: ${({ theme }) => theme.screen.rem(1)}px;
+  color: ${({ theme }) => theme.colors.darkBlue};
 `
