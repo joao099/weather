@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Platform, PermissionsAndroid, ActivityIndicator } from 'react-native'
+import { Platform, PermissionsAndroid, ActivityIndicator, RefreshControl } from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
 
 import InfoWeather from '../../components/InfoWeather'
@@ -16,6 +16,7 @@ const Home: React.FC = () => {
   const [currentLongitude, setCurrentLongitude] = useState('')
   const [currentLatitude, setCurrentLatitude] = useState('')
   const [shouldFetch, setShouldFetch] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
   let titleHeader: string = ''
   let watchID: number
@@ -130,6 +131,9 @@ const Home: React.FC = () => {
 
         // Setando o estado de Latitude
         setCurrentLatitude(currentLatitude)
+
+        // Seta o loading do refresh pra falso
+        setRefreshing(false)
       },
       (error) => {
         useSnackBar({
@@ -176,8 +180,20 @@ const Home: React.FC = () => {
     )
   }
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true)
+    getOneTimeLocation()
+  }, [])
+
   return (
-    <Container>
+    <Container
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    >
 
       {isLoading
         ? <ActivityIndicator size="large" color="#ec6e4c" />
