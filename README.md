@@ -24,6 +24,24 @@ or download the zip from the green button at the beginning of the repository
 
 <img src="https://i.ibb.co/BqMScLn/clone-zip-1.png" alt="Download zip" border="0">
 
+## ✔ Bibliotecas utilizadas
+- @react-native-community/geolocation (Utilizada para pegar a localização do usuário)
+- axios (Utilizado para fazer requisições)
+- date-fns (Utilizado para manipular datas)
+- react-native-animatable (Utilizado para animações)
+- react-native-snackbar (Para mostrar informações ao usuário)
+- react-native-vector-icons (Para utilização de ícones)
+- responsive-native (Para auxílio no desenvolvimento de layouts responsivos)
+- styled-components (Para estilização)
+- swr (Para performar as requisições, como tratamentos de cache e etc)
+- zustand (Gerenciador de estado, preferir usar zustand pois o projeto não e tão grande e robusto, então não vi necessidade de usar o Redux nesse projeto)
+- commitlint (Para gerenciamento e padronização dos commits)
+- eslint (Para melhor padronização do código)
+- typescript (Porque eu gosto ❤)
+- commitizen (Para auxliar a padronização de commits)
+- husky (Para fazer uma varredura com eslint nos arquivos antes de eu enviar pro repositório e para que não vá mensagem de commit despadronizada)
+- lint-staged (Para gerenciar melhor os arquivos que quero fazer a análise com o husky)
+
 ## 🗃 Release history
 
 - 0.1.0
