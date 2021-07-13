@@ -62,7 +62,7 @@ or download the zip from the green button at the beginning of the repository
 
 ## ❗❗ Nota de esclarecimento
 O aplicativo foi desenvolvido dentro de 4/5 dias corridos, pois semana passada estava na última sprint do projeto em que estava atuando. Foi complicado conseguir
-conciliar o desafio com as demandas da minha atual empresa. Mas enfim, aplicativo foi desenvolvido com muito carinho, curti bastante esse desafio. Estou aberto a qualquer
+conciliar o desafio com as demandas da minha atual empresa. Mas enfim, aplicativo foi desenvolvido com muito carinho, curti bastante esse desafio. Não dei muito suporte para IOS pelo fato do meu macbook estar na assistência. Estou aberto a qualquer
 tipo de feedback, sejam eles negativos ou positivos 😃
 
 ---
